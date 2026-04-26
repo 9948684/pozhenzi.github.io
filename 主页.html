@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>破阵子·辛弃疾 | 古风词韵互动主页</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+        }
+
+        body {
+            background-color: #6b4f37;
+            color: #333;
+            min-height: 100vh;
+            font-family: "STKaiti", "SimSun", "楷体", "华文楷书", serif;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path d="M0,0 L100,0 L100,100 Z" fill="%235a3d29" opacity="0.1"/></svg>');
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background-color: rgba(255, 248, 240, 0.94);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            border: 1px solid #8b7355;
+            min-height: calc(100vh - 40px);
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background: linear-gradient(to right, #3c5b3c, #4a6c4a);
+            padding: 20px 20px;
+            text-align: center;
+            border-bottom: 3px solid #8b7355;
+            flex-shrink: 0;
+        }
+
+        h1 {
+            color: #f5e8d0;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            letter-spacing: 3px;
+            margin-bottom: 10px;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 15px;
+        }
+
+        .nav-btn {
+            background-color: #5a8c7d;
+            color: #f5e8d0;
+            border: none;
+            padding: 10px 22px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+        .nav-btn:hover { background-color: #4a7668; transform: translateY(-3px); }
+
+        .main-content {
+            padding: 30px;
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        /* ========= 宫崎骏风格森林背景赛道 ========= */
+        .race-game-container {
+            background: linear-gradient(145deg, #4a7c59, #3d6b4a);
+            border-radius: 48px;
+            padding: 20px;
+            margin-top: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            border: 2px solid #8bba7a;
+            position: relative;
+            overflow: hidden;
+        }
+        /* 森林装饰元素 */
+        .race-game-container::before {
+            content: '🌲🌳🍃🌿';
+            position: absolute;
+            bottom: 5px;
+            left: 10px;
+            font-size: 28px;
+            opacity: 0.3;
+            pointer-events: none;
+            white-space: nowrap;
+        }
+        .race-game-container::after {
+            content: '🐿️ 🐦 🦋';
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 24px;
+            opacity: 0.4;
+            pointer-events: none;
+        }
+        .race-track {
+            position: relative;
+            background: #7cb57c;
+            border-radius: 80px;
+            padding: 20px 15px;
+            margin: 20px 0;
+            border: 3px solid #5a8a4a;
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.1), 0 5px 10px rgba(0,0,0,0.2);
+            overflow-x: visible;
+        }
+        .lane {
+            position: relative;
+            height: 120px;
+            background: repeating-linear-gradient(90deg, #9bca7a, #9bca7a 40px, #b8e09a 40px, #b8e09a 80px);
+            border-radius: 80px;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.1);
+        }
+        /* 小女孩骑手 */
+        .horse {
+            position: absolute;
+            bottom: 5px;
+            left: 0;
+            width: 85px;
+            transition: left 0.45s cubic-bezier(0.2, 0.9, 0.4, 1.2);
+            z-index: 30;
+            filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.2));
+        }
+        .horse img {
+            width: 100%;
+            display: block;
+            border-radius: 50%;
+            background: rgba(255,240,200,0.3);
+            padding: 4px;
+        }
+        /* 小栅栏 - 更小更可爱 */
+        .obstacle {
+            position: absolute;
+            bottom: 5px;
+            width: 28px;
+            height: 32px;
+            background: repeating-linear-gradient(90deg, #c9a87b, #c9a87b 4px, #b58b4f 4px, #b58b4f 8px);
+            border-radius: 4px 4px 8px 8px;
+            transform: translateX(-50%);
+            z-index: 20;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            border: 1px solid #e4c28a;
+        }
+        .obstacle::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: 2px;
+            right: 2px;
+            height: 6px;
+            background: #e4c28a;
+            border-radius: 3px;
+        }
+        .obstacle::after {
+            content: '🌿';
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 12px;
+            color: #5a8a3a;
+        }
+        .question-card {
+            background: rgba(255, 248, 220, 0.95);
+            border-radius: 48px;
+            padding: 22px;
+            text-align: center;
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #4a2a1a;
+            border: 2px solid #c9aa4f;
+            margin: 20px 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            line-height: 1.4;
+            backdrop-filter: blur(2px);
+        }
+        .options {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 20px 0;
+        }
+        .opt-btn {
+            background: #5a8c7d;
+            color: white;
+            border: none;
+            padding: 12px 36px;
+            border-radius: 40px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: 0.2s;
+            font-family: inherit;
+        }
+        .opt-btn:hover { background: #3e6b5c; transform: scale(1.02);}
+        .score-area { font-size: 1.4rem; text-align: center; margin: 10px; color: #f5e8c0; font-weight: bold; text-shadow: 1px 1px 2px #3a5a2a; }
+        .restart-btn {
+            background: #c9aa4f;
+            border: none;
+            padding: 8px 24px;
+            border-radius: 30px;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 15px;
+            font-family: inherit;
+        }
+
+        /* ========= 轮播图区域 3:4 比例 ========= */
+        .carousel-section {
+            margin-bottom: 40px;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            background: #2e241a;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            max-width: 560px;
+            background: #1a1410;
+        }
+        .carousel-ratio {
+            position: relative;
+            width: 100%;
+            padding-bottom: 133.33%;
+            background: #2a2418;
+            overflow: hidden;
+        }
+        .carousel-slides-wrapper {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            transition: transform 0.4s ease-out;
+        }
+        .carousel-slide {
+            flex: 0 0 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            position: relative;
+        }
+        .carousel-caption {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            background: rgba(0,0,0,0.6);
+            color: #f5e8d0;
+            text-align: center;
+            padding: 10px;
+            font-size: 1rem;
+            backdrop-filter: blur(4px);
+        }
+        .carousel-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            background: rgba(0,0,0,0.5);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 20;
+            transition: 0.2s;
+            color: #e9d6a7;
+            font-size: 1.3rem;
+        }
+        .carousel-arrow:hover { background: rgba(0,0,0,0.8); transform: translateY(-50%) scale(1.05); }
+        .arrow-left { left: 12px; }
+        .arrow-right { right: 12px; }
+        .carousel-counter {
+            position: absolute;
+            bottom: 12px;
+            right: 15px;
+            background: rgba(0,0,0,0.6);
+            color: #e9d6a7;
+            padding: 4px 10px;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            z-index: 20;
+        }
+        /* 两侧层次图片 */
+        .carousel-side-left, .carousel-side-right {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 70px;
+            height: 100px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 10px;
+            opacity: 0.55;
+            filter: blur(3px);
+            transition: all 0.3s;
+            z-index: 5;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+            pointer-events: none;
+        }
+        .carousel-side-left { left: -35px; }
+        .carousel-side-right { right: -35px; }
+        @media (max-width: 768px) {
+            .carousel-side-left, .carousel-side-right { display: none; }
+            .carousel-arrow { width: 30px; height: 30px; font-size: 1rem; }
+            .horse { width: 60px; }
+            .obstacle { width: 22px; height: 26px; }
+        }
+
+        /* 视频区域 */
+        .video-section {
+            width: 100%;
+            margin-bottom: 40px;
+            background: #1a1410;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            border: 1px solid #c9b18b;
+            display: flex;
+            justify-content: center;
+        }
+        .video-container { position: relative; width: 66.666%; background: #000; }
+        .video-wrapper { position: relative; width: 100%; padding-bottom: 56.25%; background: #000; }
+        .video-wrapper video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; border-radius: 8px; }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #f5e8d0;
+            background-color: #3c5b3c;
+            border-top: 1px solid #8b7355;
+        }
+        
+        /* 音乐控制按钮 */
+        .music-control {
+            position: fixed;
+            bottom: 80px;
+            right: 25px;
+            width: 44px;
+            height: 44px;
+            background: rgba(60, 91, 60, 0.85);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 100;
+            backdrop-filter: blur(4px);
+            border: 1px solid #c9aa4f;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+        .music-control:hover {
+            transform: scale(1.1);
+            background: rgba(60, 91, 60, 1);
+        }
+        .music-control i {
+            color: #e9d6a7;
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <header>
+        <h1>破阵子·为陈同甫赋壮词以寄之</h1>
+        <div class="nav-buttons">
+            <a href="主页.html" class="nav-btn"><i class="fas fa-home"></i> 主页</a>
+            <a href="填词.html" class="nav-btn"><i class="fas fa-gamepad"></i> 填词</a>
+            <a href="翻译.html" class="nav-btn"><i class="fas fa-language"></i> 翻译</a>
+            <a href="赏析.html" class="nav-btn"><i class="fas fa-book-open"></i> 赏析</a>
+            <a href="典故.html" class="nav-btn"><i class="fas fa-landmark"></i> 典故</a>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <!-- 轮播图区域 3:4 比例，支持自动播放+鼠标点击 -->
+        <div class="carousel-section">
+            <div class="carousel-container" id="carouselContainer">
+                <div class="carousel-ratio">
+                    <div class="carousel-slides-wrapper" id="carouselWrapper"></div>
+                </div>
+                <div class="carousel-arrow arrow-left" id="prevBtn"><i class="fas fa-chevron-left"></i></div>
+                <div class="carousel-arrow arrow-right" id="nextBtn"><i class="fas fa-chevron-right"></i></div>
+                <div class="carousel-counter" id="carouselCounter">1 / 0</div>
+            </div>
+            <div class="carousel-side-left" id="sideLeft"></div>
+            <div class="carousel-side-right" id="sideRight"></div>
+        </div>
+
+        <!-- 视频区域 -->
+        <div class="video-section">
+            <div class="video-container">
+                <div class="video-wrapper">
+                    <video id="mainVideo" controls autoplay muted loop playsinline>
+                        <source src="video.mp4" type="video/mp4">
+                    </video>
+                </div>
+            </div>
+        </div>
+
+  
+        <div class="race-game-container">
+            <h3 style="text-align:center; color:#f9f0c0; text-shadow:2px 2px 4px #3a5a2a;">🍃 森林比赛 · 五题跨栏 🍃</h3>
+            <div class="race-track">
+                <div class="lane" id="raceLane">
+                    <div class="horse" id="raceHorse">
+                        <img src="img/赛跑小女孩.gif" alt="小女孩骑手">
+                    </div>
+                </div>
+            </div>
+            <div class="score-area" id="scoreDisplay">得分: 0 / 100</div>
+            <div class="question-card" id="questionText">加载题目中...</div>
+            <div class="options" id="optionsDiv"></div>
+            <button class="restart-btn" id="restartRaceBtn">🏁 重新跨栏 🏁</button>
+            <div id="finalMessage" style="text-align:center; margin-top:15px; font-weight:bold;"></div>
+        </div>
+    </main>
+    <footer>古风词韵 · 辛弃疾《破阵子》沉浸式学习 | 离线互动游戏集</footer>
+</div>
+
+<!-- 音乐控制按钮 -->
+<div class="music-control" id="musicControl">
+    <i class="fas fa-music" id="musicIcon"></i>
+</div>
+
+<!-- 背景音乐 -->
+<audio id="bgMusic" loop preload="auto" style="display: none;">
+    <source src="音乐/游戏背景音乐_耳聆网_[声音ID：44022].mp3" type="audio/mpeg">
+</audio>
+
+<script>
+    // ========= 音乐播放控制 =========
+    const bgAudio = document.getElementById('bgMusic');
+    const musicControl = document.getElementById('musicControl');
+    const musicIcon = document.getElementById('musicIcon');
+    let isMusicPlaying = false;
+    let musicAttempted = false;
+
+    function tryPlayMusic() {
+        if (musicAttempted) return;
+        musicAttempted = true;
+        
+        bgAudio.volume = 0.35;
+        bgAudio.loop = true;
+        
+        const playPromise = bgAudio.play();
+        if (playPromise !== undefined) {
+            playPromise.then(() => {
+                isMusicPlaying = true;
+                if (musicIcon) musicIcon.className = 'fas fa-music';
+                console.log('🎵 背景音乐开始播放');
+            }).catch(() => {
+                isMusicPlaying = false;
+                if (musicIcon) musicIcon.className = 'fas fa-volume-mute';
+                console.log('⚠️ 自动播放被阻止，等待用户点击');
+                
+                // 用户首次点击页面任意位置时播放音乐
+                const startOnInteraction = () => {
+                    bgAudio.play().then(() => {
+                        isMusicPlaying = true;
+                        if (musicIcon) musicIcon.className = 'fas fa-music';
+                        console.log('🎵 用户交互后音乐开始播放');
+                    }).catch(e => console.log('播放失败', e));
+                    document.removeEventListener('click', startOnInteraction);
+                    document.removeEventListener('touchstart', startOnInteraction);
+                };
+                document.addEventListener('click', startOnInteraction);
+                document.addEventListener('touchstart', startOnInteraction);
+            });
+        }
+    }
+
+    // 音乐控制按钮点击事件
+    if (musicControl) {
+        musicControl.addEventListener('click', function(e) {
+            e.stopPropagation();
+            if (isMusicPlaying) {
+                bgAudio.pause();
+                isMusicPlaying = false;
+                if (musicIcon) musicIcon.className = 'fas fa-volume-mute';
+                console.log('⏸️ 音乐已暂停');
+            } else {
+                bgAudio.play().then(() => {
+                    isMusicPlaying = true;
+                    if (musicIcon) musicIcon.className = 'fas fa-music';
+                    console.log('▶️ 音乐开始播放');
+                }).catch(err => console.log('播放失败', err));
+            }
+        });
+    }
+
+    // 页面加载后尝试播放音乐
+    window.addEventListener('load', function() {
+        setTimeout(tryPlayMusic, 100);
+    });
+
+    // 页面可见性变化处理
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            if (isMusicPlaying) {
+                bgAudio.pause();
+            }
+        } else {
+            if (isMusicPlaying) {
+                bgAudio.play().catch(e => console.log('恢复播放失败'));
+            }
+        }
+    });
+
+    // ========= 1. 轮播图数据 =========
+    const carouselItems = [
+        { url: "img/醉里挑灯看剑.png", caption: "醉里挑灯看剑" },
+	    { url: "img/梦回吹角连营.png", caption: "梦回吹角连营" },
+        { url: "img/八百里分麾下炙.png", caption: "八百里分麾下炙" },
+        { url: "img/沙场秋点兵.png", caption: "沙场秋点兵" },
+        { url: "img/马作的卢飞快.png", caption: "马作的卢飞快" },
+        { url: "img/可怜白发生.png", caption: "可怜白发生" }
+    ];
+
+    let currentIndex = 0;
+    let autoInterval;
+
+    function buildCarousel() {
+        const wrapper = document.getElementById('carouselWrapper');
+        wrapper.innerHTML = '';
+        carouselItems.forEach(item => {
+            const slide = document.createElement('div');
+            slide.className = 'carousel-slide';
+            slide.style.backgroundImage = `url('${item.url}')`;
+            const cap = document.createElement('div');
+            cap.className = 'carousel-caption';
+            cap.innerText = item.caption;
+            slide.appendChild(cap);
+            wrapper.appendChild(slide);
+        });
+        updateCarouselDisplay();
+        startAutoPlay();
+    }
+
+    function updateCarouselDisplay() {
+        const wrapper = document.getElementById('carouselWrapper');
+        if (wrapper) wrapper.style.transform = `translateX(-${currentIndex * 100}%)`;
+        document.getElementById('carouselCounter').innerText = `${currentIndex+1} / ${carouselItems.length}`;
+        const prevIdx = (currentIndex - 1 + carouselItems.length) % carouselItems.length;
+        const nextIdx = (currentIndex + 1) % carouselItems.length;
+        const leftDiv = document.getElementById('sideLeft');
+        const rightDiv = document.getElementById('sideRight');
+        if (leftDiv) leftDiv.style.backgroundImage = `url('${carouselItems[prevIdx].url}')`;
+        if (rightDiv) rightDiv.style.backgroundImage = `url('${carouselItems[nextIdx].url}')`;
+    }
+
+    function nextSlide() { currentIndex = (currentIndex + 1) % carouselItems.length; updateCarouselDisplay(); restartAutoPlay(); }
+    function prevSlide() { currentIndex = (currentIndex - 1 + carouselItems.length) % carouselItems.length; updateCarouselDisplay(); restartAutoPlay(); }
+
+    function startAutoPlay() {
+        if (autoInterval) clearInterval(autoInterval);
+        autoInterval = setInterval(() => { nextSlide(); }, 2000);
+    }
+    function restartAutoPlay() { 
+        if (autoInterval) clearInterval(autoInterval);
+        autoInterval = setInterval(() => { nextSlide(); }, 2000);
+    }
+
+    // ========= 2. 题库 (10道) =========
+    const questionBank = [
+        { text: "“醉里挑灯看剑”中的“挑灯”意思是把灯挑亮，表现出词人深夜心系疆场。", correct: true, explanation: "挑灯拨亮灯火，深夜看剑。" },
+        { text: "“梦回吹角连营”中“吹角连营”描绘了军旅生活的紧张壮阔。", correct: true, explanation: "号角连营，气势雄壮。" },
+        { text: "“八百里分麾下炙”中的“八百里”指距离长度。", correct: false, explanation: "“八百里”指牛，典故出自《世说新语》。" },
+        { text: "“五十弦翻塞外声”中“翻”意为演奏，“塞外声”指边塞战歌。", correct: true, explanation: "翻:演奏，塞外声:悲壮战歌。" },
+        { text: "“马作的卢飞快”中的“的卢”是刘备的坐骑，突出战马英勇。", correct: true, explanation: "的卢救主，神速非凡。" },
+        { text: "“弓如霹雳弦惊”运用比喻，表现射箭威力。", correct: true, explanation: "弓弦声如雷震。" },
+        { text: "“了却君王天下事”情感始终昂扬向上，没有转折。", correct: false, explanation: "末句“可怜白发生”陡然悲凉。" },
+        { text: "全词通过虚实结合，梦境与现实形成强烈对比。", correct: true, explanation: "壮悲交织。" },
+        { text: "“可怜白发生”中“可怜”意为可爱，表达自豪。", correct: false, explanation: "“可怜”意为可叹、悲愤。" },
+        { text: "这首词“壮”在军容壮阔，结尾悲壮更深化情感。", correct: true, explanation: "壮中带悲，余韵深沉。" }
+    ];
+
+    let currentQuestions = [], currentQIndex = 0, score = 0, gameActive = true, horseLeftPercent = 0;
+    const TOTAL_QS = 5, stepPercent = 88 / TOTAL_QS;
+
+    function updateHorsePosition() {
+        const lane = document.getElementById('raceLane');
+        const horse = document.getElementById('raceHorse');
+        if (!lane || !horse) return;
+        const maxLeft = lane.clientWidth - horse.clientWidth - 12;
+        let leftPx = (horseLeftPercent / 100) * maxLeft;
+        if (leftPx < 0) leftPx = 0;
+        horse.style.left = leftPx + 'px';
+    }
+
+    function createObstacles() {
+        document.querySelectorAll('.obstacle').forEach(o => o.remove());
+        const lane = document.getElementById('raceLane');
+        if (!lane) return;
+        const laneW = lane.clientWidth;
+        for (let i = 0; i < TOTAL_QS; i++) {
+            const obs = document.createElement('div');
+            obs.className = 'obstacle';
+            let leftPercent = (i + 1) * (88 / TOTAL_QS);
+            let leftPx = (leftPercent / 100) * laneW;
+            obs.style.left = leftPx + 'px';
+            obs.style.bottom = '8px';
+            const num = document.createElement('span');
+            num.textContent = i+1;
+            num.style.position = 'absolute';
+            num.style.bottom = '-18px';
+            num.style.left = '50%';
+            num.style.transform = 'translateX(-50%)';
+            num.style.fontSize = '10px';
+            num.style.color = '#f5e8a0';
+            obs.appendChild(num);
+            lane.appendChild(obs);
+        }
+    }
+
+    // 答题音效函数
+    function playSound(type) {
+        try {
+            let audio = new Audio();
+            if (type === 'correct') {
+                audio.src = "音乐/对勾，答对——综艺_耳聆网_[声音ID：36966].mp3";
+            } else {
+                audio.src = "音乐/错误音效_耳聆网_[声音ID：36278].mp3";
+            }
+            audio.volume = 0.5;
+            audio.play().catch(e=>console.log("音效播放失败", e));
+        } catch(e) {}
+    }
+
+    function endRace() {
+        if (!gameActive) return;
+        gameActive = false;
+        let msg = score === 100 ? '🏆 完美通关！状元及第！ 🏆' : (score >= 60 ? '🎉 进士及第，再温习必夺魁！ 🎉' : '🍃 再品词韵，策马重来～');
+        document.getElementById('finalMessage').innerHTML = `<div style="background:#f0e6c5; padding:15px; border-radius:40px;">🎊 抵达终点 🎊<br>得分: ${score} / 100<br>${msg}<br>🐎 森林欢呼 🐎</div>`;
+        let cheer = new Audio("https://www.soundjay.com/misc/sounds/applause-01.mp3");
+        cheer.volume = 0.3;
+        cheer.play().catch(e=>{});
+        horseLeftPercent = 88;
+        updateHorsePosition();
+        document.getElementById('optionsDiv').innerHTML = '<button class="restart-btn" id="restartAfterFinish">🌿 重新跨栏 🌿</button>';
+        document.getElementById('restartAfterFinish')?.addEventListener('click', () => location.reload());
+    }
+
+    function loadNextQuestion() {
+        if (!gameActive || currentQIndex >= currentQuestions.length) { if(currentQIndex>=currentQuestions.length) endRace(); return; }
+        const q = currentQuestions[currentQIndex];
+        document.getElementById('questionText').innerHTML = q.text;
+        document.getElementById('optionsDiv').innerHTML = `<button class="opt-btn" data-choice="true">✔️ 正确</button><button class="opt-btn" data-choice="false">❌ 错误</button>`;
+        document.querySelectorAll('.opt-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                if (!gameActive) return;
+                const userChoice = btn.dataset.choice === 'true';
+                handleAnswer(userChoice, q.correct, q.explanation);
+            });
+        });
+    }
+
+    function handleAnswer(userChoice, isCorrect, explanation) {
+        if (!gameActive) return;
+        const fb = document.getElementById('finalMessage');
+        horseLeftPercent += stepPercent;
+        if (horseLeftPercent > 88) horseLeftPercent = 88;
+        updateHorsePosition();
+
+        if (userChoice === isCorrect) {
+            score += 20;
+            document.getElementById('scoreDisplay').innerHTML = `得分: ${score} / 100`;
+            playSound('correct');
+            fb.innerHTML = `<span style="color:#2e6b2e;">✨ 漂亮！跨越第${currentQIndex+1}栏！ +20分 ✨</span>`;
+            setTimeout(() => { if(gameActive && currentQIndex+1 < currentQuestions.length) fb.innerHTML = ''; }, 800);
+        } else {
+            playSound('wrong');
+            const horseDiv = document.getElementById('raceHorse');
+            horseDiv.style.transform = 'rotate(-5deg)';
+            setTimeout(() => horseDiv.style.transform = '', 350);
+            fb.innerHTML = `<span style="color:#aa4a2a;">🍂 啊哦！第${currentQIndex+1}栏绊了一下... 正解：${explanation} 🍂</span>`;
+            setTimeout(() => { if(gameActive && currentQIndex+1 < currentQuestions.length) fb.innerHTML = ''; }, 1800);
+        }
+        currentQIndex++;
+        if (currentQIndex < currentQuestions.length) loadNextQuestion();
+        else endRace();
+    }
+
+    function selectRandomQuestions() {
+        const shuffled = [...questionBank];
+        for (let i = shuffled.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+        }
+        return shuffled.slice(0, TOTAL_QS);
+    }
+
+    function initRace() {
+        currentQuestions = selectRandomQuestions();
+        currentQIndex = 0; score = 0; horseLeftPercent = 0; gameActive = true;
+        document.getElementById('scoreDisplay').innerHTML = '得分: 0 / 100';
+        document.getElementById('finalMessage').innerHTML = '';
+        updateHorsePosition();
+        setTimeout(() => { createObstacles(); loadNextQuestion(); }, 100);
+        window.addEventListener('resize', () => { createObstacles(); updateHorsePosition(); });
+    }
+
+    // 视频自动播放
+    const video = document.getElementById('mainVideo');
+    if(video) { video.muted = true; video.play().catch(e=>{}); }
+
+    buildCarousel();
+    document.getElementById('prevBtn').addEventListener('click', prevSlide);
+    document.getElementById('nextBtn').addEventListener('click', nextSlide);
+    initRace();
+    document.getElementById('restartRaceBtn').addEventListener('click', () => location.reload());
+</script>
+</body>
+</html>
